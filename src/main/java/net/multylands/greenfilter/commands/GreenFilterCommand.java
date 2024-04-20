@@ -1,7 +1,7 @@
-package net.multylands.greenchat.commands;
+package net.multylands.greenfilter.commands;
 
-import net.multylands.greenchat.GreenChat;
-import net.multylands.greenchat.utils.Chat;
+import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.utils.Chat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChatCommand implements CommandExecutor, TabCompleter {
-    public GreenChat plugin;
+public class GreenFilterCommand implements CommandExecutor, TabCompleter {
+    public GreenFilter plugin;
 
-    public ChatCommand(GreenChat plugin) {
+    public GreenFilterCommand(GreenFilter plugin) {
         this.plugin = plugin;
     }
 
@@ -26,7 +26,7 @@ public class ChatCommand implements CommandExecutor, TabCompleter {
             }
             return false;
         }
-        CommandExecutor executor = GreenChat.commandExecutors.get(args[0]);
+        CommandExecutor executor = GreenFilter.commandExecutors.get(args[0]);
         if (executor == null) {
             for (String message : plugin.configKeys.getLangList("help")) {
                 Chat.sendMessageSender(plugin, sender, message);
@@ -40,7 +40,7 @@ public class ChatCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> tabCompleteStrings = new ArrayList<>();
-        for (String commands : GreenChat.commandExecutors.keySet()) {
+        for (String commands : GreenFilter.commandExecutors.keySet()) {
             if (commands.startsWith(args[0])) {
                 if (!commands.equalsIgnoreCase(args[0])) {
                     tabCompleteStrings.add(commands);

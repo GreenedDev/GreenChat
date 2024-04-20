@@ -1,16 +1,16 @@
-package net.multylands.greenchat.listeners.update;
+package net.multylands.greenfilter.listeners.update;
 
-import net.multylands.greenchat.GreenChat;
-import net.multylands.greenchat.utils.Chat;
+import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.utils.Chat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class Update implements Listener {
-    GreenChat plugin;
+    GreenFilter plugin;
 
-    public Update(GreenChat plugin) {
+    public Update(GreenFilter plugin) {
         this.plugin = plugin;
     }
 

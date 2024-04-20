@@ -1,17 +1,16 @@
-package net.multylands.greenchat.commands.subcommands;
+package net.multylands.greenfilter.commands.subcommands;
 
-import net.multylands.greenchat.GreenChat;
-import net.multylands.greenchat.utils.Chat;
-import net.multylands.greenchat.utils.Utils;
+import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.utils.Chat;
+import net.multylands.greenfilter.utils.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class ToggleChatCommand implements CommandExecutor {
-    private GreenChat plugin;
+    private GreenFilter plugin;
 
-    public ToggleChatCommand(GreenChat plugin) {
+    public ToggleChatCommand(GreenFilter plugin) {
         this.plugin = plugin;
     }
 
@@ -21,12 +20,12 @@ public class ToggleChatCommand implements CommandExecutor {
             Chat.sendMessageSender(plugin, sender, plugin.configKeys.getLang("no-perm"));
             return false;
         }
-        if (GreenChat.isChatEnabled == null) {
+        if (GreenFilter.isChatEnabled == null) {
             Chat.broadcast(plugin, Utils.replacePlayer(plugin.configKeys.getLang("commands.toggle-chat.someone-disabled-chat"), sender.getName()));
-            GreenChat.isChatEnabled = sender.getName();
+            GreenFilter.isChatEnabled = sender.getName();
         } else {
             Chat.broadcast(plugin, Utils.replacePlayer(plugin.configKeys.getLang("commands.toggle-chat.someone-enabled-chat"), sender.getName()));
-            GreenChat.isChatEnabled = null;
+            GreenFilter.isChatEnabled = null;
         }
         return false;
 

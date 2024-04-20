@@ -34,9 +34,9 @@ dependencies {
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
-group = "net.multylands.greenchat"
+group = "net.multylands.greenfilter"
 version = "1.0"
-description = "GreenChat"
+description = "GreenFilter"
 
 publishing {
     publications.create<MavenPublication>("maven") {

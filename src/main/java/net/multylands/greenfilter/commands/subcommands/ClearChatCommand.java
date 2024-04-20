@@ -1,17 +1,16 @@
-package net.multylands.greenchat.commands.subcommands;
+package net.multylands.greenfilter.commands.subcommands;
 
-import net.multylands.greenchat.GreenChat;
-import net.multylands.greenchat.utils.Chat;
-import org.bukkit.Bukkit;
+import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.utils.Chat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ClearChatCommand implements CommandExecutor {
-    GreenChat plugin;
+    GreenFilter plugin;
 
-    public ClearChatCommand(GreenChat plugin) {
+    public ClearChatCommand(GreenFilter plugin) {
         this.plugin = plugin;
     }
 

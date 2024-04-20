@@ -1,10 +1,10 @@
-package net.multylands.greenchat.utils;
+package net.multylands.greenfilter.utils;
 
-import net.multylands.greenchat.GreenChat;
+import net.multylands.greenfilter.GreenFilter;
 import org.bukkit.entity.Player;
 
 public class ChecksUtils {
-    public static boolean isSpamming(GreenChat plugin, Player player) {
+    public static boolean isSpamming(GreenFilter plugin, Player player) {
         if (!plugin.configKeys.getOptionBoolean("anti-spam.enabled")) {
             return false;
         }
@@ -23,7 +23,7 @@ public class ChecksUtils {
             }
         }
     }
-    public static boolean isSpammingCommand(GreenChat plugin, Player player) {
+    public static boolean isSpammingCommand(GreenFilter plugin, Player player) {
         if (!plugin.configKeys.getOptionBoolean("commands-anti-spam.enabled")) {
             return false;
         }
@@ -42,7 +42,7 @@ public class ChecksUtils {
             }
         }
     }
-    public static boolean isSyntax(GreenChat plugin, String command) {
+    public static boolean isSyntax(GreenFilter plugin, String command) {
         if (!plugin.configKeys.getOptionBoolean("anti-syntax.enabled")) {
             return false;
         }
@@ -58,7 +58,7 @@ public class ChecksUtils {
         }
         return false;
     }
-    public static boolean isFlooding(GreenChat plugin, String message) {
+    public static boolean isFlooding(GreenFilter plugin, String message) {
         if (!plugin.configKeys.getOptionBoolean("anti-flood.enabled")) {
             return false;
         }
@@ -95,7 +95,7 @@ public class ChecksUtils {
         return false;
     }
 
-    public static boolean isYelling(GreenChat plugin, String message) {
+    public static boolean isYelling(GreenFilter plugin, String message) {
         if (!plugin.configKeys.getOptionBoolean("anti-caps.enabled")) {
             return false;
         }
@@ -114,23 +114,23 @@ public class ChecksUtils {
         return false;
     }
 
-    public static boolean isRepeating(GreenChat plugin, Player player, String text) {
+    public static boolean isRepeating(GreenFilter plugin, Player player, String text) {
         if (!plugin.configKeys.getOptionBoolean("anti-repeat.enabled")) {
             return false;
         }
-        if (GreenChat.recentMessages.get(player.getUniqueId()) != null) {
-            if (text.contains(GreenChat.recentMessages.get(player.getUniqueId()))) {
-                if (GreenChat.recentMessages.get(player.getUniqueId()).length() > plugin.configKeys.getOptionInt("anti-repeat.size-barrier")) {
+        if (GreenFilter.recentMessages.get(player.getUniqueId()) != null) {
+            if (text.contains(GreenFilter.recentMessages.get(player.getUniqueId()))) {
+                if (GreenFilter.recentMessages.get(player.getUniqueId()).length() > plugin.configKeys.getOptionInt("anti-repeat.size-barrier")) {
                     return true;
                 }
-                if (text.replaceAll("[!?.]", "").equals(GreenChat.recentMessages.get(player.getUniqueId()))) {
+                if (text.replaceAll("[!?.]", "").equals(GreenFilter.recentMessages.get(player.getUniqueId()))) {
                     return true;
                 }
             }
         }
         return false;
     }
-    public static boolean isSwearing(GreenChat plugin, String all) {
+    public static boolean isSwearing(GreenFilter plugin, String all) {
         for (String blacklistedWord : plugin.getConfig().getStringList("anti-swear-words")) {
             if (!all.contains(blacklistedWord)) {
                 continue;
@@ -140,7 +140,7 @@ public class ChecksUtils {
         return false;
     }
 
-    public static boolean isAdvertising(GreenChat plugin, String all) {
+    public static boolean isAdvertising(GreenFilter plugin, String all) {
         for (String blacklistedAd : plugin.getConfig().getStringList("anti-ad-blacklist")) {
             if (!all.contains(blacklistedAd)) {
                 continue;

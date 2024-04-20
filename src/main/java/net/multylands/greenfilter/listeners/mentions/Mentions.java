@@ -1,6 +1,6 @@
-package net.multylands.greenchat.listeners.mentions;
+package net.multylands.greenfilter.listeners.mentions;
 
-import net.multylands.greenchat.GreenChat;
+import net.multylands.greenfilter.GreenFilter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -10,9 +10,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class Mentions implements Listener {
-    private GreenChat plugin;
+    private GreenFilter plugin;
 
-    public Mentions(GreenChat plugin) {
+    public Mentions(GreenFilter plugin) {
         this.plugin = plugin;
     }
     @EventHandler(ignoreCancelled = true)

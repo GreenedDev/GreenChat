@@ -1,13 +1,13 @@
-package net.multylands.greenchat.objects;
+package net.multylands.greenfilter.objects;
 
-import net.multylands.greenchat.GreenChat;
+import net.multylands.greenfilter.GreenFilter;
 
 import java.util.List;
 
 public class ConfigKeys {
-    GreenChat plugin;
+    GreenFilter plugin;
 
-    public ConfigKeys(GreenChat plugin) {
+    public ConfigKeys(GreenFilter plugin) {
         this.plugin = plugin;
     }
 

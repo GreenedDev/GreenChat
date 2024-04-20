@@ -1,8 +1,8 @@
-package net.multylands.greenchat.utils;
+package net.multylands.greenfilter.utils;
 
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
-import net.multylands.greenchat.GreenChat;
+import net.multylands.greenfilter.GreenFilter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,7 +12,7 @@ public class Chat {
         return ChatColor.translateAlternateColorCodes('&', text);
     }
 
-    public static void sendMessage(GreenChat plugin, Player player, String message) {
+    public static void sendMessage(GreenFilter plugin, Player player, String message) {
         if (message.startsWith("$")) {
             Component parsed = plugin.miniMessage().deserialize(message.substring(1));
             plugin.adventure().player(player).sendMessage(parsed);
@@ -21,7 +21,7 @@ public class Chat {
         }
     }
 
-    public static void sendMessageSender(GreenChat plugin, CommandSender sender, String message) {
+    public static void sendMessageSender(GreenFilter plugin, CommandSender sender, String message) {
         if (message.startsWith("$")) {
             Component parsed = plugin.miniMessage().deserialize(message.substring(1));
             plugin.adventure().sender(sender).sendMessage(parsed);
@@ -29,7 +29,7 @@ public class Chat {
             sender.sendMessage(color(message));
         }
     }
-    public static void broadcast(GreenChat plugin, String message) {
+    public static void broadcast(GreenFilter plugin, String message) {
         if (message.startsWith("$")) {
             Component parsed = plugin.miniMessage().deserialize(message.substring(1));
             plugin.adventure().players().sendMessage(parsed);

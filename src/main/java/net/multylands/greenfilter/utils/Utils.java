@@ -1,4 +1,4 @@
-package net.multylands.greenchat.utils;
+package net.multylands.greenfilter.utils;
 
 public class Utils {
     public static String replace(String text) {

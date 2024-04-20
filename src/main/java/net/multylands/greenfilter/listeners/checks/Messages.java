@@ -1,10 +1,10 @@
-package net.multylands.greenchat.listeners.checks;
+package net.multylands.greenfilter.listeners.checks;
 
-import net.multylands.greenchat.GreenChat;
-import net.multylands.greenchat.utils.Chat;
-import net.multylands.greenchat.utils.ChecksUtils;
-import net.multylands.greenchat.utils.PunishmentUtils;
-import net.multylands.greenchat.utils.Utils;
+import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.utils.Chat;
+import net.multylands.greenfilter.utils.ChecksUtils;
+import net.multylands.greenfilter.utils.PunishmentUtils;
+import net.multylands.greenfilter.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,9 +12,9 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 
 public class Messages implements Listener {
-    private GreenChat plugin;
+    private GreenFilter plugin;
 
-    public Messages(GreenChat plugin) {
+    public Messages(GreenFilter plugin) {
         this.plugin = plugin;
     }
 
@@ -22,15 +22,15 @@ public class Messages implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        if (GreenChat.isChatEnabled != null) {
-            Chat.sendMessage(plugin, player, plugin.configKeys.getLang("commands.toggle-chat.chat-is-disabled").replace("%player%", GreenChat.isChatEnabled));
+        if (GreenFilter.isChatEnabled != null) {
+            Chat.sendMessage(plugin, player, plugin.configKeys.getLang("commands.toggle-chat.chat-is-disabled").replace("%player%", GreenFilter.isChatEnabled));
             event.setCancelled(true);
             return;
         }
         String all = Utils.replace(event.getMessage().toLowerCase());
         if (player.hasPermission("chat.bypass")) {
-            GreenChat.recentMessages.remove(player.getUniqueId());
-            GreenChat.recentMessages.put(player.getUniqueId(), all);
+            GreenFilter.recentMessages.remove(player.getUniqueId());
+            GreenFilter.recentMessages.put(player.getUniqueId(), all);
             return;
         }
         if (ChecksUtils.isRepeating(plugin, player, all)) {
@@ -43,8 +43,8 @@ public class Messages implements Listener {
         if (sworn || advertised) {
             event.setCancelled(true);
             PunishmentUtils.executePunishmentAsync(plugin, player, sworn, advertised, "chat", all);
-            GreenChat.recentMessages.remove(player.getUniqueId());
-            GreenChat.recentMessages.put(player.getUniqueId(), all);
+            GreenFilter.recentMessages.remove(player.getUniqueId());
+            GreenFilter.recentMessages.put(player.getUniqueId(), all);
             return;
         }
 
@@ -58,20 +58,20 @@ public class Messages implements Listener {
             if (ChecksUtils.isFlooding(plugin, noSpaceMessage)) {
                 Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.anti-flood"));
                 event.setCancelled(true);
-                GreenChat.recentMessages.remove(player.getUniqueId());
-                GreenChat.recentMessages.put(player.getUniqueId(), all);
+                GreenFilter.recentMessages.remove(player.getUniqueId());
+                GreenFilter.recentMessages.put(player.getUniqueId(), all);
                 return;
             }
             if (ChecksUtils.isYelling(plugin, noSpaceMessage)) {
                 Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.anti-caps"));
                 event.setCancelled(true);
-                GreenChat.recentMessages.remove(player.getUniqueId());
-                GreenChat.recentMessages.put(player.getUniqueId(), all);
+                GreenFilter.recentMessages.remove(player.getUniqueId());
+                GreenFilter.recentMessages.put(player.getUniqueId(), all);
                 return;
             }
         }
-        GreenChat.recentMessages.remove(player.getUniqueId());
-        GreenChat.recentMessages.put(player.getUniqueId(), all);
+        GreenFilter.recentMessages.remove(player.getUniqueId());
+        GreenFilter.recentMessages.put(player.getUniqueId(), all);
     }
 }
 

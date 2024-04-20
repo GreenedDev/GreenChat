@@ -1,4 +1,4 @@
-package net.multylands.greenchat.utils;
+package net.multylands.greenfilter.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

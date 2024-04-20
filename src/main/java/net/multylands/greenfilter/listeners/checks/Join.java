@@ -1,17 +1,17 @@
-package net.multylands.greenchat.listeners.checks;
+package net.multylands.greenfilter.listeners.checks;
 
-import net.multylands.greenchat.GreenChat;
-import net.multylands.greenchat.utils.ChecksUtils;
-import net.multylands.greenchat.utils.PunishmentUtils;
+import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.utils.ChecksUtils;
+import net.multylands.greenfilter.utils.PunishmentUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class Join implements Listener {
-    private GreenChat plugin;
+    private GreenFilter plugin;
 
-    public Join(GreenChat plugin) {
+    public Join(GreenFilter plugin) {
         this.plugin = plugin;
     }
 
