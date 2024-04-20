@@ -5,42 +5,98 @@
 
 
 anti-swear-words:
-  - "blabla"
-  - "blablaa"
+  - "shit"
+  - "your mom"
 anti-advertising-blacklist:
   - "badserver.com"
   - "play.hypixel.net"
-punish-commands:
+#Notifications will only be sent to people with chat.notify permission
+punishment:
   book:
-    advertising: "/ipmute %player% -N 3h Violation of chat rules [Advertising]"
-    swearing: "/ipmute %player% -N 3h Violation of chat rules [Swearing]"
-    advertising-message: "&cCHAT: %player% failed advertising in a book &7(%reason%)"
-    swearing-message: "&cCHAT: %player% failed swearing in a book &7(%reason%)"
+    commands:
+      advertising:
+      - "/ipmute %player% -N 3h Violation of chat rules [Advertising]"
+      swearing:
+      - "/ipmute %player% -N 3h Violation of chat rules [Swearing]"
+    notifications:
+      enabled: true
+      advertising-message: "&cCHAT: %player% failed advertising in a book &7(%reason%)"
+      swearing-message: "&cCHAT: %player% failed swearing in a book &7(%reason%)"
   command:
-    advertising: "/ipmute %player% -N 3h Violation of chat rules [Advertising]"
-    swearing: "/ipmute %player% -N 3h Violation of chat rules [Swearing]"
-    advertising-message: "&cCHAT: %player% failed advertising in command &7(%reason%)"
-    swearing-message: "&cCHAT: %player% failed swearing in command &7(%reason%)"
+    commands:
+      advertising:
+      - "/ipmute %player% -N 3h Violation of chat rules [Advertising]"
+      swearing:
+      - "/ipmute %player% -N 3h Violation of chat rules [Swearing]"
+    notifications:
+      enabled: true
+      advertising-message: "&cCHAT: %player% failed advertising in command &7(%reason%)"
+      swearing-message: "&cCHAT: %player% failed swearing in command &7(%reason%)"
   item:
-    advertising: "/ipban %player% 6d Violation of rules [Advertising]"
-    swearing: "/ipban %player% 30m Violation of rules [Swearing]"
-    advertising-message: "&cCHAT: %player% failed advertising with item &7(%reason%)"
-    swearing-message: "&cCHAT: %player% failed swearing with item &7(%reason%)"
+    commands:
+      advertising:
+      - "/ipban %player% 6d Violation of rules [Advertising]"
+      swearing:
+      - "/ipban %player% 30m Violation of rules [Swearing]"
+    notifications:
+      enabled: true
+      advertising-message: "&cCHAT: %player% failed advertising with item &7(%reason%)"
+      swearing-message: "&cCHAT: %player% failed swearing with item &7(%reason%)"
   username:
-    advertising: "/ban %player% Violation of rules [Advertising]"
-    swearing: "/ban %player% Violation of rules [Swearing]"
-    advertising-message: "&cCHAT: %player% failed advertising in username &7(%reason%)"
-    swearing-message: "&cCHAT: %player% failed swearing in username &7(%reason%)"
+    commands:
+      advertising:
+      - "/ban %player% Violation of rules [Advertising]"
+      swearing:
+      - "/ban %player% Violation of rules [Swearing]"
+    notifications:
+      enabled: true
+      advertising-message: "&cCHAT: %player% failed advertising in username &7(%reason%)"
+      swearing-message: "&cCHAT: %player% failed swearing in username &7(%reason%)"
   chat:
-    advertising: "/ipmute %player% -N 3h Violation of chat rules [Advertising]"
-    swearing: "/ipmute %player% -N 3h Violation of chat rules [Swearing]"
-    advertising-message: "&cCHAT: %player% failed advertising in chat &7(%reason%)"
-    swearing-message: "&cCHAT: %player% failed swearing in chat &7(%reason%)"
+    commands:
+      advertising:
+      - "/ipmute %player% -N 3h Violation of chat rules [Advertising]"
+      swearing:
+      - "/ipmute %player% -N 3h Violation of chat rules [Swearing]"
+    notifications:
+      enabled: true
+      advertising-message: "&cCHAT: %player% failed advertising in chat &7(%reason%)"
+      swearing-message: "&cCHAT: %player% failed swearing in chat &7(%reason%)"
   sign:
-    advertising: "/ipban %player% 6d Violation of rules [Advertising]"
-    swearing: "/ipban %player% 30m Violation of rules [Swearing]"
-    advertising-message: "&cCHAT: %player% failed advertising in sign &7(%reason%)"
-    swearing-message: "&cCHAT: %player% failed swearing in sign &7(%reason%)"
+    commands:
+      advertising:
+      - "/ipban %player% 6d Violation of rules [Advertising]"
+      swearing:
+      - "/ipban %player% 30m Violation of rules [Swearing]"
+    notifications:
+      enabled: true
+      advertising-message: "&cCHAT: %player% failed advertising in sign &7(%reason%)"
+      swearing-message: "&cCHAT: %player% failed swearing in sign &7(%reason%)"
+  spam:
+    commands: []
+    notifications:
+      enabled: false
+      message: "&cCHAT: %player% failed spam &7(%reason%)"
+  caps:
+    commands: []
+    notifications:
+      enabled: true
+      message: "&cCHAT: %player% failed caps &7(%reason%)"
+  flood:
+    commands: []
+    notifications:
+      enabled: true
+      message: "&cCHAT: %player% failed flood &7(%reason%)"
+  repeat:
+    commands: []
+    notifications:
+      enabled: false
+      message: "&cCHAT: %player% failed repeat &7(%reason%)"
+  syntax:
+    commands: []
+    notifications:
+      enabled: true
+      message: "&cCHAT: %player% failed syntax &7(%reason%)"
 options:
   anti-spam:
     enabled: true
@@ -50,7 +106,7 @@ options:
     delay: 1 #in seconds
   anti-caps:
     enabled: true
-    #limit of uppercase letters in the message. after the limit is exceeded player will get warning of caps.
+    #if there's n amount of uppercase letters in a row player will get a warning.
     limit: 6
   anti-flood:
     enabled: true
@@ -63,6 +119,13 @@ options:
     size-barrier: 8
   anti-syntax:
     enabled: true
+  commands:
+    clear-chat:
+      enabled: true
+    alerts:
+      enabled: true
+    toggle-chat:
+      enabled: true
   #if command starts with these we will not do checks on the command.
   commands-whitelist:
     - register
@@ -85,7 +148,7 @@ language:
       someone-enabled-chat: "&aServer Chat has been enabled by &6%player%"
   reload: "&aSuccessfully reloaded!"
   no-perm: "&cYou do not have permission to execute that command!"
-  update-available: "&a[GreenChat] &bAn update &6%newversion% &bfor the GreenChat plugin is now available. Download it from &bhttps://www.spigotmc.org/resources/114685/"
+  update-available: "&a[GreenChat] &bAn update &6%newversion% &bfor the GreenChat plugin is now available. Download it from &bhttps://www.spigotmc.org/resources/116285/"
   warn:
     anti-spam:
       chat: "&cPlease wait &6%seconds% &cbefore sending another message!"
@@ -95,9 +158,9 @@ language:
     anti-repeat: "&cCHAT: You can't repeat same message!"
     syntax: "&cSyntax is disabled in this server!"
   help:
-    - "&aChat Commands:"
+    - "&aGreenFilter Commands:"
     - "&e/chat &7- &bDisplays this message."
     - "&e/chat clear &7- &bClear Chat for all players."
-    - "&e/chat alerts &7- &bDisable mentioning for you."
-    - "&e/chat toggle &7- &bDisable server chat for everyone."
-    - "&e/chat reload &7- &bReload the plugin's config."
+    - "&e/chat alerts &7- &bToggle notification sound when players mention you."
+    - "&e/chat toggle &7- &bToggle server chat for everyone."
+    - "&e/greenfilter reload &7- &bReload the plugin's config."

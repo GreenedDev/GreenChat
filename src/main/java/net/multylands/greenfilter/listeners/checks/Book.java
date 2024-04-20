@@ -1,6 +1,8 @@
 package net.multylands.greenfilter.listeners.checks;
 
 import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.objects.CheckRule;
+import net.multylands.greenfilter.objects.Platform;
 import net.multylands.greenfilter.utils.ChecksUtils;
 import net.multylands.greenfilter.utils.PunishmentUtils;
 import net.multylands.greenfilter.utils.Utils;
@@ -26,8 +28,8 @@ public class Book implements Listener {
                 return;
             }
             String all = Utils.replace(event.getNewBookMeta().getPages().toString());
-            boolean sworn = ChecksUtils.isSwearing(plugin, all);
-            boolean advertised = ChecksUtils.isAdvertising(plugin, all);
+            boolean sworn = ChecksUtils.getSwearingPart(plugin, all) != null;
+            boolean advertised = ChecksUtils.getAdvertisingPart(plugin, all) != null;
             if (!(sworn || advertised)) {
                 return;
             }
@@ -37,7 +39,12 @@ public class Book implements Listener {
                 player.getInventory().setItemInOffHand(null);
             }
             event.setCancelled(true);
-            PunishmentUtils.executePunishment(plugin, player, sworn, advertised, "book", all);
+            if (sworn) {
+                PunishmentUtils.executePunishment(plugin, player, CheckRule.sworn, Platform.book, all, ChecksUtils.getSwearingPart(plugin, all));
+            }
+            if (advertised) {
+                PunishmentUtils.executePunishment(plugin, player, CheckRule.advertise, Platform.book, all, ChecksUtils.getAdvertisingPart(plugin, all));
+            }
         });
     }
 }

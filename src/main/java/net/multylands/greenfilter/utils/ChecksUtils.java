@@ -42,25 +42,25 @@ public class ChecksUtils {
             }
         }
     }
-    public static boolean isSyntax(GreenFilter plugin, String command) {
+    public static String isSyntax(GreenFilter plugin, String command) {
         if (!plugin.configKeys.getOptionBoolean("anti-syntax.enabled")) {
-            return false;
+            return null;
         }
         if (!command.contains(" ")) {
             if (command.contains(":")) {
-                return true;
+                return command;
             } else {
-                return false;
+                return null;
             }
         }
         if (command.split(" ")[0].contains(":")) {
-            return true;
+            return command.split(" ")[0];
         }
-        return false;
+        return null;
     }
-    public static boolean isFlooding(GreenFilter plugin, String message) {
+    public static String isFlooding(GreenFilter plugin, String message) {
         if (!plugin.configKeys.getOptionBoolean("anti-flood.enabled")) {
-            return false;
+            return null;
         }
         int searchingRadius = plugin.configKeys.getOptionInt("anti-flood.radius");
         for (int b = 0; b < message.length(); b++) {
@@ -72,15 +72,16 @@ public class ChecksUtils {
             }
             int lengthOfMessageAfterReplacedTheFirstCharWithRadius = message.replace(charAt0TimesSearchingRadius, "").length();
             if (message.length() != lengthOfMessageAfterReplacedTheFirstCharWithRadius) {
-                System.out.println(charAt0OfMessage);
-                return true;
+                return charAt0TimesSearchingRadius;
             }
         }
         String lastLetters = message.substring(message.length() - searchingRadius);
         String charAt0OfLastLetters = String.valueOf(lastLetters.charAt(0));
         if (lastLetters.matches("[a-zA-Z]+")) {
             int numberOfLettersLeftAfterReplacingCharAt0 = lastLetters.replaceAll(charAt0OfLastLetters, "").length();
-            return numberOfLettersLeftAfterReplacingCharAt0 == 0;
+            if (numberOfLettersLeftAfterReplacingCharAt0 == 0) {
+                return lastLetters;
+            }
         } else {
             int FloodedChars = 0;
             for (int i = 0; i < lastLetters.length(); i++) {
@@ -89,64 +90,73 @@ public class ChecksUtils {
                 }
             }
             if (FloodedChars == searchingRadius) {
-                return true;
+                return lastLetters;
             }
         }
-        return false;
+        return null;
     }
 
-    public static boolean isYelling(GreenFilter plugin, String message) {
+    public static String getYellingPart(GreenFilter plugin, String message) {
         if (!plugin.configKeys.getOptionBoolean("anti-caps.enabled")) {
-            return false;
+            return null;
         }
         int upperCaseLetters = 0;
-        for (int i = 0; i < message.length(); i++) {
+        int starting = 0;
+        for (int i = 0; i<message.length(); i++) {
             char charAt = message.charAt(i);
-            if (!(charAt >= 'A' && charAt <= 'Z')) {
-                continue;
-            }
-            upperCaseLetters++;
-            if (upperCaseLetters < plugin.configKeys.getOptionInt("anti-caps.limit")) {
-                continue;
-            }
-            return true;
+            if (charAt >= 'A' && charAt <= 'Z') {
+                if (upperCaseLetters == 0) {
+                    starting = i;
+                }
+                upperCaseLetters++;
+                if (upperCaseLetters > plugin.configKeys.getOptionInt("anti-caps.limit")) {
+                    String flaggedPart = message.substring(starting);
+                    flaggedPart = flaggedPart.substring(0, i);
+                    return flaggedPart;
+                }
+            } else {
+                if (upperCaseLetters > plugin.configKeys.getOptionInt("anti-caps.limit")) {
+                    String flaggedPart = message.substring(starting);
+                    flaggedPart = flaggedPart.substring(0, i);
+                    return flaggedPart;
+                }
+             }
         }
-        return false;
+        return null;
     }
 
-    public static boolean isRepeating(GreenFilter plugin, Player player, String text) {
+    public static String getRepeatingPart(GreenFilter plugin, Player player, String text) {
         if (!plugin.configKeys.getOptionBoolean("anti-repeat.enabled")) {
-            return false;
+            return null;
         }
         if (GreenFilter.recentMessages.get(player.getUniqueId()) != null) {
             if (text.contains(GreenFilter.recentMessages.get(player.getUniqueId()))) {
                 if (GreenFilter.recentMessages.get(player.getUniqueId()).length() > plugin.configKeys.getOptionInt("anti-repeat.size-barrier")) {
-                    return true;
+                    return text;
                 }
                 if (text.replaceAll("[!?.]", "").equals(GreenFilter.recentMessages.get(player.getUniqueId()))) {
-                    return true;
+                    return text;
                 }
             }
         }
-        return false;
+        return null;
     }
-    public static boolean isSwearing(GreenFilter plugin, String all) {
+    public static String getSwearingPart(GreenFilter plugin, String all) {
         for (String blacklistedWord : plugin.getConfig().getStringList("anti-swear-words")) {
             if (!all.contains(blacklistedWord)) {
                 continue;
             }
-            return true;
+            return blacklistedWord;
         }
-        return false;
+        return null;
     }
-
-    public static boolean isAdvertising(GreenFilter plugin, String all) {
-        for (String blacklistedAd : plugin.getConfig().getStringList("anti-ad-blacklist")) {
+    public static String getAdvertisingPart(GreenFilter plugin, String all) {
+        for (String blacklistedAd : plugin.getConfig().getStringList("anti-advertising-blacklist")) {
             if (!all.contains(blacklistedAd)) {
                 continue;
             }
-            return true;
+            return blacklistedAd;
         }
-        return false;
+        return null;
     }
 }

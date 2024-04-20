@@ -1,6 +1,8 @@
 package net.multylands.greenfilter.listeners.checks;
 
 import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.objects.CheckRule;
+import net.multylands.greenfilter.objects.Platform;
 import net.multylands.greenfilter.utils.Chat;
 import net.multylands.greenfilter.utils.ChecksUtils;
 import net.multylands.greenfilter.utils.PunishmentUtils;
@@ -21,6 +23,7 @@ public class Command implements Listener {
     public void onCmd(PlayerCommandPreprocessEvent event) {
         String all = Utils.replace(event.getMessage());
         Player player = event.getPlayer();
+        String criminalName = player.getName();
         String startCheck = all.replace("/", "");
         for (String whitelistedCommandStarting : plugin.getConfig().getStringList("options.commands-whitelist")) {
             if (startCheck.startsWith(whitelistedCommandStarting)) {
@@ -30,22 +33,29 @@ public class Command implements Listener {
         if (player.hasPermission("chat.bypass")) {
             return;
         }
-        if (ChecksUtils.isSyntax(plugin, all)) {
+        if (ChecksUtils.isSyntax(plugin, all) != null) {
             Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.syntax"));
             event.setCancelled(true);
+            PunishmentUtils.executeCheckRulePunishment(plugin, CheckRule.syntax, criminalName, all, ChecksUtils.isSyntax(plugin, all));
             return;
         }
         if (ChecksUtils.isSpammingCommand(plugin, player)) {
             Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.anti-spam.commands"));
             event.setCancelled(true);
+            PunishmentUtils.executeCheckRulePunishment(plugin, CheckRule.spam, criminalName, all, null);
             return;
         }
-        boolean sworn = ChecksUtils.isSwearing(plugin, all);
-        boolean advertised = ChecksUtils.isAdvertising(plugin, all);
+        boolean sworn = ChecksUtils.getSwearingPart(plugin, all) != null;
+        boolean advertised = ChecksUtils.getAdvertisingPart(plugin, all) != null;
         if (!(sworn || advertised)) {
             return;
         }
         event.setCancelled(true);
-        PunishmentUtils.executePunishmentAsync(plugin, player, sworn, advertised, "command", all);
+        if (sworn) {
+            PunishmentUtils.executePunishmentAsync(plugin, player, CheckRule.sworn, Platform.command, all, ChecksUtils.getSwearingPart(plugin, all));
+        }
+        if (advertised) {
+            PunishmentUtils.executePunishmentAsync(plugin, player, CheckRule.advertise, Platform.command, all, ChecksUtils.getAdvertisingPart(plugin, all));
+        }
     }
 }

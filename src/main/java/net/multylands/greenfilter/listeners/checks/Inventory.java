@@ -1,6 +1,8 @@
 package net.multylands.greenfilter.listeners.checks;
 
 import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.objects.CheckRule;
+import net.multylands.greenfilter.objects.Platform;
 import net.multylands.greenfilter.utils.ChecksUtils;
 import net.multylands.greenfilter.utils.PunishmentUtils;
 import net.multylands.greenfilter.utils.Utils;
@@ -32,14 +34,19 @@ public class Inventory implements Listener {
         }
         if (event.getCurrentItem().getItemMeta().hasDisplayName()) {
             String all = Utils.replace(event.getCurrentItem().getItemMeta().getDisplayName());
-            boolean sworn = ChecksUtils.isSwearing(plugin, all);
-            boolean advertised = ChecksUtils.isAdvertising(plugin, all);
+            boolean sworn = ChecksUtils.getSwearingPart(plugin, all) != null;
+            boolean advertised = ChecksUtils.getAdvertisingPart(plugin, all) != null;
             if (!(sworn || advertised)) {
                 return;
             }
             event.setCancelled(true);
             event.getInventory().setItem(event.getSlot(), null);
-            PunishmentUtils.executePunishment(plugin, player, sworn, advertised, "item", all);
+            if (sworn) {
+                PunishmentUtils.executePunishmentAsync(plugin, player, CheckRule.sworn, Platform.item, all, ChecksUtils.getSwearingPart(plugin, all));
+            }
+            if (advertised) {
+                PunishmentUtils.executePunishmentAsync(plugin, player, CheckRule.advertise, Platform.item, all, ChecksUtils.getAdvertisingPart(plugin, all));
+            }
         }
     }
 }

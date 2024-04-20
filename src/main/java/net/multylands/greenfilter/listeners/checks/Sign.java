@@ -1,6 +1,8 @@
 package net.multylands.greenfilter.listeners.checks;
 
 import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.objects.CheckRule;
+import net.multylands.greenfilter.objects.Platform;
 import net.multylands.greenfilter.utils.ChecksUtils;
 import net.multylands.greenfilter.utils.PunishmentUtils;
 import net.multylands.greenfilter.utils.Utils;
@@ -19,7 +21,7 @@ public class Sign implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onSign(SignChangeEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+        Bukkit.getScheduler().runTask(plugin, () -> {
             Player player = event.getPlayer();
             StringBuilder lines = new StringBuilder();
             if (player.hasPermission("chat.bypass")) {
@@ -33,13 +35,18 @@ public class Sign implements Listener {
             if (all.isEmpty()) {
                 return;
             }
-            boolean sworn = ChecksUtils.isSwearing(plugin, all);
-            boolean advertised = ChecksUtils.isAdvertising(plugin, all);
+            boolean sworn = ChecksUtils.getSwearingPart(plugin, all) != null;
+            boolean advertised = ChecksUtils.getAdvertisingPart(plugin, all) != null;
             if (!(sworn || advertised)) {
                 return;
             }
             event.getBlock().breakNaturally();
-            PunishmentUtils.executePunishment(plugin, player, sworn, advertised, "sign", all);
+            if (sworn) {
+                PunishmentUtils.executePunishmentAsync(plugin, player, CheckRule.sworn, Platform.sign, all, ChecksUtils.getSwearingPart(plugin, all));
+            }
+            if (advertised) {
+                PunishmentUtils.executePunishmentAsync(plugin, player, CheckRule.advertise, Platform.sign, all, ChecksUtils.getAdvertisingPart(plugin, all));
+            }
         });
     }
 }

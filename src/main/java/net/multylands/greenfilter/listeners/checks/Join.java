@@ -1,6 +1,8 @@
 package net.multylands.greenfilter.listeners.checks;
 
 import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.objects.CheckRule;
+import net.multylands.greenfilter.objects.Platform;
 import net.multylands.greenfilter.utils.ChecksUtils;
 import net.multylands.greenfilter.utils.PunishmentUtils;
 import org.bukkit.entity.Player;
@@ -19,12 +21,17 @@ public class Join implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         String all = event.getPlayer().getName().toLowerCase().replaceAll("[^A-Za-z ]", "");
-        boolean sworn = ChecksUtils.isSwearing(plugin, all);
-        boolean advertised = ChecksUtils.isAdvertising(plugin, all);
+        boolean sworn = ChecksUtils.getSwearingPart(plugin, all) != null;
+        boolean advertised = ChecksUtils.getAdvertisingPart(plugin, all) != null;
         if (!(sworn || advertised)) {
             return;
         }
         event.setJoinMessage(null);
-        PunishmentUtils.executePunishmentAsync(plugin, player, sworn, advertised, "username", all);
+        if (sworn) {
+            PunishmentUtils.executePunishmentAsync(plugin, player, CheckRule.sworn, Platform.username, all, ChecksUtils.getSwearingPart(plugin, all));
+        }
+        if (advertised) {
+            PunishmentUtils.executePunishmentAsync(plugin, player, CheckRule.advertise, Platform.username, all, ChecksUtils.getAdvertisingPart(plugin, all));
+        }
     }
 }

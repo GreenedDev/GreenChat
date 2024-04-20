@@ -17,6 +17,9 @@ public class Mentions implements Listener {
     }
     @EventHandler(ignoreCancelled = true)
     public void onPing(AsyncPlayerChatEvent event) {
+        if (!plugin.configKeys.getOptionBoolean("commands.alerts")) {
+            return;
+        }
         Player sender = event.getPlayer();
         String message = event.getMessage();
         if (!event.isAsynchronous()) {

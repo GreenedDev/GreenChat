@@ -1,5 +1,8 @@
 package net.multylands.greenfilter.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utils {
     public static String replace(String text) {
         return text.replace("ⓐ", "a")
@@ -88,8 +91,15 @@ public class Utils {
                 .replace("ჰ", "h")
                 .replaceAll("[^A-Za-z., აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭხჯჰⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ]", "");
     }
+    public static List<String> replacePlaceholdersList(List<String> oldList, String playerName, String reason) {
+        List<String> newList = new ArrayList<>();
+        for (String command : oldList) {
+            newList.add(command.replace("%player%", playerName).replace("%reason%", reason));
+        }
+        return newList;
+    }
     public static String replacePlaceholders(String text, String playerName, String reason) {
-        return text.replace("%player%", playerName).replace("%reason%", reason);
+            return text.replace("%player%", playerName).replace("%reason%", reason);
     }
     public static String replacePlayer(String text, String playerName) {
         return text.replace("%player%", playerName);

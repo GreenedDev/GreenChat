@@ -13,7 +13,7 @@ public class ServerUtils {
         }));
     }
     public static void checkForUpdates(GreenFilter plugin) {
-        new UpdateChecker(plugin, 114685).getVersion(version -> {
+        new UpdateChecker(plugin, 116285).getVersion(version -> {
             if (!plugin.getDescription().getVersion().equals(version)) {
                 GreenFilter.newVersion = version;
                 Chat.sendMessageSender(plugin, Bukkit.getConsoleSender(), plugin.configKeys.getLang("update-available").replace("%newversion%", version));

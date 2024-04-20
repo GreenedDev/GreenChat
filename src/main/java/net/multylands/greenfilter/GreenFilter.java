@@ -10,6 +10,7 @@ import net.multylands.greenfilter.commands.subcommands.ToggleChatCommand;
 import net.multylands.greenfilter.listeners.checks.*;
 import net.multylands.greenfilter.listeners.mentions.Mentions;
 import net.multylands.greenfilter.objects.ConfigKeys;
+import net.multylands.greenfilter.utils.ServerUtils;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -58,6 +59,8 @@ public class GreenFilter extends JavaPlugin implements Listener {
         this.adventure = BukkitAudiences.create(this);
         miniMessage = MiniMessage.miniMessage();
         configKeys = new ConfigKeys(this);
+        ServerUtils.checkForUpdates(this);
+        ServerUtils.implementBStats(this);
         getServer().getPluginManager().registerEvents(new Book(this), this);
         getServer().getPluginManager().registerEvents(new Messages(this), this);
         getServer().getPluginManager().registerEvents(new Command(this), this);
@@ -68,9 +71,15 @@ public class GreenFilter extends JavaPlugin implements Listener {
 
         getCommand("chat").setExecutor(new GreenFilterCommand(this));
         commandExecutors.put("reload", new ReloadCommand(this));
-        commandExecutors.put("alerts", new ToggleAlertsCommand(this));
-        commandExecutors.put("clear", new ClearChatCommand(this));
-        commandExecutors.put("toggle", new ToggleChatCommand(this));
+        if (configKeys.getOptionBoolean("commands.alerts")) {
+            commandExecutors.put("alerts", new ToggleAlertsCommand(this));
+        }
+        if (configKeys.getOptionBoolean("commands.clear-chat")) {
+            commandExecutors.put("clear", new ClearChatCommand(this));
+        }
+        if (configKeys.getOptionBoolean("commands.toggle-chat")) {
+            commandExecutors.put("toggle", new ToggleChatCommand(this));
+        }
 
         if (!dir.exists()) {
             dir.mkdir();

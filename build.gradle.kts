@@ -35,7 +35,7 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 group = "net.multylands.greenfilter"
-version = "1.0"
+version = "1.1"
 description = "GreenFilter"
 
 publishing {
