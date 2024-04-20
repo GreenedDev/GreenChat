@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 
 public class ServerUtils {
     public static void implementBStats(GreenFilter plugin) {
-        Metrics metrics = new Metrics(plugin, 21659);
+        Metrics metrics = new Metrics(plugin, 21662);
         metrics.addCustomChart(new SingleLineChart("servers", () -> {
             return 1;
         }));
