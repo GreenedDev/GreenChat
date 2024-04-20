@@ -1,0 +1,103 @@
+#hello this is chat plugin created by GreenedDev
+#what does this plugin do?
+#you can block swearing/advertising in chat, books, signs, commands, on item names and even in player nickname too!
+#here is our config
+
+
+anti-swear-words:
+  - "blabla"
+  - "blablaa"
+anti-advertising-blacklist:
+  - "badserver.com"
+  - "play.hypixel.net"
+punish-commands:
+  book:
+    advertising: "/ipmute %player% -N 3h Violation of chat rules [Advertising]"
+    swearing: "/ipmute %player% -N 3h Violation of chat rules [Swearing]"
+    advertising-message: "&cCHAT: %player% failed advertising in a book &7(%reason%)"
+    swearing-message: "&cCHAT: %player% failed swearing in a book &7(%reason%)"
+  command:
+    advertising: "/ipmute %player% -N 3h Violation of chat rules [Advertising]"
+    swearing: "/ipmute %player% -N 3h Violation of chat rules [Swearing]"
+    advertising-message: "&cCHAT: %player% failed advertising in command &7(%reason%)"
+    swearing-message: "&cCHAT: %player% failed swearing in command &7(%reason%)"
+  item:
+    advertising: "/ipban %player% 6d Violation of rules [Advertising]"
+    swearing: "/ipban %player% 30m Violation of rules [Swearing]"
+    advertising-message: "&cCHAT: %player% failed advertising with item &7(%reason%)"
+    swearing-message: "&cCHAT: %player% failed swearing with item &7(%reason%)"
+  username:
+    advertising: "/ban %player% Violation of rules [Advertising]"
+    swearing: "/ban %player% Violation of rules [Swearing]"
+    advertising-message: "&cCHAT: %player% failed advertising in username &7(%reason%)"
+    swearing-message: "&cCHAT: %player% failed swearing in username &7(%reason%)"
+  chat:
+    advertising: "/ipmute %player% -N 3h Violation of chat rules [Advertising]"
+    swearing: "/ipmute %player% -N 3h Violation of chat rules [Swearing]"
+    advertising-message: "&cCHAT: %player% failed advertising in chat &7(%reason%)"
+    swearing-message: "&cCHAT: %player% failed swearing in chat &7(%reason%)"
+  sign:
+    advertising: "/ipban %player% 6d Violation of rules [Advertising]"
+    swearing: "/ipban %player% 30m Violation of rules [Swearing]"
+    advertising-message: "&cCHAT: %player% failed advertising in sign &7(%reason%)"
+    swearing-message: "&cCHAT: %player% failed swearing in sign &7(%reason%)"
+options:
+  anti-spam:
+    enabled: true
+    delay: 3 #in seconds
+  commands-anti-spam:
+    enabled: true
+    delay: 1 #in seconds
+  anti-caps:
+    enabled: true
+    #limit of uppercase letters in the message. after the limit is exceeded player will get warning of caps.
+    limit: 6
+  anti-flood:
+    enabled: true
+    #the checking radius. this is used in many flood-check logics. to answer short,
+    #if a char repeats N times in the message it will flag. (N = radius)
+    radius: 5
+  anti-repeat:
+    enabled: true
+    #If the player's last message's length is lower than this then he's next message will not be checked as try of repeated message.
+    size-barrier: 8
+  anti-syntax:
+    enabled: true
+  #if command starts with these we will not do checks on the command.
+  commands-whitelist:
+    - register
+    - reg
+    - login
+  mentions:
+    enabled: true
+    sound: BLOCK_NOTE_BLOCK_PLING
+language:
+  commands:
+    clear-chat:
+      player: "&aThe chat was cleared by %player%"
+      console: "&aThe chat was cleared by Console"
+    toggle-alerts:
+      enable: "&aChat alerts are now enabled!"
+      disable: "&cChat alerts are now disabled!"
+    toggle-chat:
+      chat-is-disabled: "&cServer Chat is disabled by &6%player%"
+      someone-disabled-chat: "&cServer Chat has been disabled by &6%player%"
+      someone-enabled-chat: "&aServer Chat has been enabled by &6%player%"
+  reload: "&aSuccessfully reloaded!"
+  no-perm: "&cYou do not have permission to execute that command!"
+  update-available: "&a[GreenChat] &bAn update &6%newversion% &bfor the GreenChat plugin is now available. Download it from &bhttps://www.spigotmc.org/resources/114685/"
+  warn:
+    anti-spam:
+      chat: "&cPlease wait &6%seconds% &cbefore sending another message!"
+      commands: "&cPlease wait &6%seconds% &cbefore sending another command!"
+    anti-caps: "&cYou are using too many caps!"
+    anti-flood: "&cYou can't send too large messages!"
+    anti-repeat: "&cCHAT: You can't repeat same message!"
+    syntax: "&cSyntax is disabled in this server!"
+  help:
+    - "&aChat Commands:"
+    - "&e/chat &7- &bDisplays this message."
+    - "&e/chat clear &7- &bClear Chat for all players."
+    - "&e/chat alerts &7- &bDisable mentioning for you."
+    - "&e/chat toggle &7- &bDisable server chat for everyone."
+    - "&e/chat reload &7- &bReload the plugin's config."

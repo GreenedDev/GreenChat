@@ -1,0 +1,9 @@
+name: GreenChat
+version: '1.0'
+main: net.multylands.greenchat.GreenChat
+authors: [ GreenedDev ]
+description: Chat Filter plugin created for Multylands
+api-version: 1.20
+commands:
+  chat:
+    aliases: [greenchat, chatgreen]
