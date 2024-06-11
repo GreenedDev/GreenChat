@@ -17,12 +17,12 @@ public class ReloadCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("chat.admin.reload")) {
-            Chat.sendMessageSender(plugin, sender, plugin.configKeys.getLang("no-perm"));
+            Chat.sendMessageSender(sender, plugin.configKeys.getLang("no-perm"));
             return false;
         }
         plugin.reloadConfig();
         plugin.configKeys = new ConfigKeys(plugin);
-        Chat.sendMessageSender(plugin, sender, plugin.configKeys.getLang("reload"));
+        Chat.sendMessageSender(sender, plugin.configKeys.getLang("reload"));
         return false;
     }
 }

@@ -1,6 +1,7 @@
 package net.multylands.greenfilter.listeners.mentions;
 
 import net.multylands.greenfilter.GreenFilter;
+import net.multylands.greenfilter.utils.ServerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -26,7 +27,7 @@ public class Mentions implements Listener {
             return;
         }
         String replacedMessage = ChatColor.stripColor(message.replace("&", "§"));
-        replacedMessage = plugin.miniMessage().stripTags(replacedMessage);
+        replacedMessage = ServerUtils.miniMessage().stripTags(replacedMessage);
         String[] words = replacedMessage.split(" ");
         for (String word : words) {
             Player pingedPlayer;

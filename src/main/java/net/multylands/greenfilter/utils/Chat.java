@@ -7,32 +7,36 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class Chat {
     public static String color(String text) {
         return ChatColor.translateAlternateColorCodes('&', text);
     }
 
-    public static void sendMessage(GreenFilter plugin, Player player, String message) {
+    public static void sendMessage(Player player, String message) {
         if (message.startsWith("$")) {
-            Component parsed = plugin.miniMessage().deserialize(message.substring(1));
-            plugin.adventure().player(player).sendMessage(parsed);
+            Component parsed = ServerUtils.miniMessage().deserialize(message.substring(1));
+            player.sendMessage(parsed);
         } else {
             player.sendMessage(color(message));
         }
     }
 
-    public static void sendMessageSender(GreenFilter plugin, CommandSender sender, String message) {
+    public static void sendMessageSender(CommandSender sender, String message) {
         if (message.startsWith("$")) {
-            Component parsed = plugin.miniMessage().deserialize(message.substring(1));
-            plugin.adventure().sender(sender).sendMessage(parsed);
+            Component parsed = ServerUtils.miniMessage().deserialize(message.substring(1));
+            sender.sendMessage(parsed);
         } else {
             sender.sendMessage(color(message));
         }
     }
-    public static void broadcast(GreenFilter plugin, String message) {
+    public static void broadcast(String message) {
         if (message.startsWith("$")) {
-            Component parsed = plugin.miniMessage().deserialize(message.substring(1));
-            plugin.adventure().players().sendMessage(parsed);
+            Component parsed = ServerUtils.miniMessage().deserialize(message.substring(1));
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.sendMessage(parsed);
+            }
         } else {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 player.sendMessage(color(message));

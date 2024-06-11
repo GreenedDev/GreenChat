@@ -2,7 +2,7 @@
 #what does this plugin do?
 #you can block swearing/advertising in chat, books, signs, commands, on item names and even in player nickname too!
 #here is our config
-
+regex-mode: false
 
 anti-swear-words:
   - "shit"

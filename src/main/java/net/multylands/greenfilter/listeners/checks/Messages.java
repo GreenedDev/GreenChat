@@ -26,7 +26,7 @@ public class Messages implements Listener {
         Player player = event.getPlayer();
         String criminalName = player.getName();
         if (GreenFilter.isChatEnabled != null) {
-            Chat.sendMessage(plugin, player, plugin.configKeys.getLang("commands.toggle-chat.chat-is-disabled").replace("%player%", GreenFilter.isChatEnabled));
+            Chat.sendMessage( player, plugin.configKeys.getLang("commands.toggle-chat.chat-is-disabled").replace("%player%", GreenFilter.isChatEnabled));
             event.setCancelled(true);
             return;
         }
@@ -50,7 +50,7 @@ public class Messages implements Listener {
         }
 
         if (ChecksUtils.getRepeatingPart(plugin, player, all) != null) {
-            Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.anti-repeat"));
+            Chat.sendMessage(player, plugin.configKeys.getLang("warn.anti-repeat"));
             PunishmentUtils.executeCheckRulePunishment(plugin, CheckRule.repeat, criminalName, all, ChecksUtils.getRepeatingPart(plugin, player, all));
             event.setCancelled(true);
             return;
@@ -65,13 +65,13 @@ public class Messages implements Listener {
         String noSpaceMessage = event.getMessage().replaceAll(" ", "");
         if (noSpaceMessage.length() >= 5) {
             if (ChecksUtils.isFlooding(plugin, noSpaceMessage) != null) {
-                Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.anti-flood"));
+                Chat.sendMessage( player, plugin.configKeys.getLang("warn.anti-flood"));
                 PunishmentUtils.executeCheckRulePunishment(plugin, CheckRule.flood, criminalName, all, ChecksUtils.isFlooding(plugin, noSpaceMessage));
                 event.setCancelled(true);
                 return;
             }
             if (ChecksUtils.getYellingPart(plugin, noSpaceMessage) != null) {
-                Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.anti-caps"));
+                Chat.sendMessage(player, plugin.configKeys.getLang("warn.anti-caps"));
                 PunishmentUtils.executeCheckRulePunishment(plugin, CheckRule.caps, criminalName, event.getMessage(), ChecksUtils.getYellingPart(plugin, noSpaceMessage));
                 event.setCancelled(true);
                 return;

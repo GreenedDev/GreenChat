@@ -17,18 +17,18 @@ public class ClearChatCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("chat.admin.clear")) {
-            Chat.sendMessageSender(plugin, sender, plugin.configKeys.getLang("no-perm"));
+            Chat.sendMessageSender(sender, plugin.configKeys.getLang("no-perm"));
             return false;
         }
         for (int i = 0; i < 600; i++) {
-            Chat.broadcast(plugin, "");
+            Chat.broadcast("");
         }
         if (sender instanceof Player) {
             Player executor = (Player) sender;
-            Chat.broadcast(plugin, plugin.configKeys.getLang("commands.clear-chat.player").replace("%player%", executor.getName()));
+            Chat.broadcast(plugin.configKeys.getLang("commands.clear-chat.player").replace("%player%", executor.getName()));
             return false;
         }
-        Chat.broadcast(plugin, plugin.configKeys.getLang("commands.clear-chat.console"));
+        Chat.broadcast(plugin.configKeys.getLang("commands.clear-chat.console"));
         return false;
     }
 }

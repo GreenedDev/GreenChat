@@ -72,7 +72,7 @@ public class PunishmentUtils {
             if (!user.hasPermission("chat.notify")) {
                 continue;
             }
-            Chat.sendMessage(plugin, user, message);
+            Chat.sendMessage(user, message);
         }
     }
 }

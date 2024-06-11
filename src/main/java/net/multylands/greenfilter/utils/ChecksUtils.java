@@ -2,6 +2,7 @@ package net.multylands.greenfilter.utils;
 
 import net.multylands.greenfilter.GreenFilter;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.regex.qual.Regex;
 
 public class ChecksUtils {
     public static boolean isSpamming(GreenFilter plugin, Player player) {
@@ -18,11 +19,12 @@ public class ChecksUtils {
                 return false;
             } else {
                 String secondsLeft = String.valueOf(plugin.configKeys.getOptionInt("anti-spam.delay") - secondsSinceLastMessage);
-                Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.anti-spam.chat").replace("%seconds%", secondsLeft));
+                Chat.sendMessage(player, plugin.configKeys.getLang("warn.anti-spam.chat").replace("%seconds%", secondsLeft));
                 return true;
             }
         }
     }
+
     public static boolean isSpammingCommand(GreenFilter plugin, Player player) {
         if (!plugin.configKeys.getOptionBoolean("commands-anti-spam.enabled")) {
             return false;
@@ -37,11 +39,12 @@ public class ChecksUtils {
                 return false;
             } else {
                 String secondsLeft = String.valueOf(plugin.configKeys.getOptionInt("commands-anti-spam.delay") - secondsSinceLastMessage);
-                Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.anti-spam.commands").replace("%seconds%", secondsLeft));
+                Chat.sendMessage( player, plugin.configKeys.getLang("warn.anti-spam.commands").replace("%seconds%", secondsLeft));
                 return true;
             }
         }
     }
+
     public static String isSyntax(GreenFilter plugin, String command) {
         if (!plugin.configKeys.getOptionBoolean("anti-syntax.enabled")) {
             return null;
@@ -58,6 +61,7 @@ public class ChecksUtils {
         }
         return null;
     }
+
     public static String isFlooding(GreenFilter plugin, String message) {
         if (!plugin.configKeys.getOptionBoolean("anti-flood.enabled")) {
             return null;
@@ -102,7 +106,7 @@ public class ChecksUtils {
         }
         int upperCaseLetters = 0;
         int starting = 0;
-        for (int i = 0; i<message.length(); i++) {
+        for (int i = 0; i < message.length(); i++) {
             char charAt = message.charAt(i);
             if (charAt >= 'A' && charAt <= 'Z') {
                 if (upperCaseLetters == 0) {
@@ -120,7 +124,7 @@ public class ChecksUtils {
                     flaggedPart = flaggedPart.substring(0, i);
                     return flaggedPart;
                 }
-             }
+            }
         }
         return null;
     }
@@ -141,21 +145,43 @@ public class ChecksUtils {
         }
         return null;
     }
+
     public static String getSwearingPart(GreenFilter plugin, String all) {
-        for (String blacklistedWord : plugin.getConfig().getStringList("anti-swear-words")) {
-            if (!all.contains(blacklistedWord)) {
-                continue;
+        boolean regexEnabled = plugin.getConfig().getBoolean("regex-mode");
+        if (regexEnabled) {
+            for (String blacklistedWord : plugin.getConfig().getStringList("anti-swear-words")) {
+                if (!all.matches(".*" + blacklistedWord + ".*")) {
+                    continue;
+                }
+                return blacklistedWord;
             }
-            return blacklistedWord;
+        } else {
+            for (String blacklistedWord : plugin.getConfig().getStringList("anti-swear-words")) {
+                if (!all.contains(blacklistedWord)) {
+                    continue;
+                }
+                return blacklistedWord;
+            }
         }
         return null;
     }
+
     public static String getAdvertisingPart(GreenFilter plugin, String all) {
-        for (String blacklistedAd : plugin.getConfig().getStringList("anti-advertising-blacklist")) {
-            if (!all.contains(blacklistedAd)) {
-                continue;
+        boolean regexEnabled = plugin.getConfig().getBoolean("regex-mode");
+        if (regexEnabled) {
+            for (String blacklistedAd : plugin.getConfig().getStringList("anti-advertising-blacklist")) {
+                if (!all.matches(".*" + blacklistedAd + ".*")) {
+                    continue;
+                }
+                return blacklistedAd;
             }
-            return blacklistedAd;
+        } else {
+            for (String blacklistedAd : plugin.getConfig().getStringList("anti-advertising-blacklist")) {
+                if (!all.contains(blacklistedAd)) {
+                    continue;
+                }
+                return blacklistedAd;
+            }
         }
         return null;
     }

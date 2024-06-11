@@ -1,5 +1,6 @@
 package net.multylands.greenfilter.utils;
 
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.multylands.greenfilter.GreenFilter;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
@@ -16,8 +17,14 @@ public class ServerUtils {
         new UpdateChecker(plugin, 116285).getVersion(version -> {
             if (!plugin.getDescription().getVersion().equals(version)) {
                 GreenFilter.newVersion = version;
-                Chat.sendMessageSender(plugin, Bukkit.getConsoleSender(), plugin.configKeys.getLang("update-available").replace("%newversion%", version));
+                Chat.sendMessageSender(Bukkit.getConsoleSender(), plugin.configKeys.getLang("update-available").replace("%newversion%", version));
             }
         });
+    }
+    public static MiniMessage miniMessage() {
+        if (GreenFilter.miniMessage == null) {
+            throw new IllegalStateException("miniMessage is null when getting it from the main class");
+        }
+        return GreenFilter.miniMessage;
     }
 }

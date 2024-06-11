@@ -22,14 +22,14 @@ public class GreenFilterCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
             for (String message : plugin.configKeys.getLangList("help")) {
-                Chat.sendMessageSender(plugin, sender, message);
+                Chat.sendMessageSender(sender, message);
             }
             return false;
         }
         CommandExecutor executor = GreenFilter.commandExecutors.get(args[0]);
         if (executor == null) {
             for (String message : plugin.configKeys.getLangList("help")) {
-                Chat.sendMessageSender(plugin, sender, message);
+                Chat.sendMessageSender(sender, message);
             }
             return false;
         }

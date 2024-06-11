@@ -34,13 +34,13 @@ public class Command implements Listener {
             return;
         }
         if (ChecksUtils.isSyntax(plugin, all) != null) {
-            Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.syntax"));
+            Chat.sendMessage(player, plugin.configKeys.getLang("warn.syntax"));
             event.setCancelled(true);
             PunishmentUtils.executeCheckRulePunishment(plugin, CheckRule.syntax, criminalName, all, ChecksUtils.isSyntax(plugin, all));
             return;
         }
         if (ChecksUtils.isSpammingCommand(plugin, player)) {
-            Chat.sendMessage(plugin, player, plugin.configKeys.getLang("warn.anti-spam.commands"));
+            Chat.sendMessage( player, plugin.configKeys.getLang("warn.anti-spam.commands"));
             event.setCancelled(true);
             PunishmentUtils.executeCheckRulePunishment(plugin, CheckRule.spam, criminalName, all, null);
             return;

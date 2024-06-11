@@ -10,6 +10,7 @@ import net.multylands.greenfilter.commands.subcommands.ToggleChatCommand;
 import net.multylands.greenfilter.listeners.checks.*;
 import net.multylands.greenfilter.listeners.mentions.Mentions;
 import net.multylands.greenfilter.objects.ConfigKeys;
+import net.multylands.greenfilter.utils.ConfigUtils;
 import net.multylands.greenfilter.utils.ServerUtils;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -36,29 +37,16 @@ public class GreenFilter extends JavaPlugin implements Listener {
     public FileConfiguration chatAlertsConfig = YamlConfiguration.loadConfiguration(ChatAlertsFile);
     public ConfigKeys configKeys;
 
+    public static MiniMessage miniMessage;
+
     public static String isChatEnabled = null;
 
-    private BukkitAudiences adventure;
-    MiniMessage miniMessage;
-
-    public MiniMessage miniMessage() {
-        if (miniMessage == null) {
-            throw new IllegalStateException("miniMessage is null when getting it from the main class");
-        }
-        return miniMessage;
-    }
-
-    public BukkitAudiences adventure() {
-        if (adventure == null) {
-            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
-        }
-        return this.adventure;
-    }
     @Override
     public void onEnable() {
-        this.adventure = BukkitAudiences.create(this);
         miniMessage = MiniMessage.miniMessage();
         configKeys = new ConfigKeys(this);
+        ConfigUtils keys = new ConfigUtils(this);
+        keys.addMissingKeysAndValues(getConfig(), "config.yml");
         ServerUtils.checkForUpdates(this);
         ServerUtils.implementBStats(this);
         getServer().getPluginManager().registerEvents(new Book(this), this);
